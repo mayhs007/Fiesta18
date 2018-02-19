@@ -120,9 +120,12 @@ class PagesController extends Controller
         Auth::user()->confirmation()->save($confirmation);
         return redirect()->route('pages.dashboard');
     }
-    function downloadTicket(){
+    function downloadTicket()
+    {
+        $events = Auth::user()->events;
         $user = Auth::user();
-        $pdf = PDF::loadView('pages.ticket', [ 'user' => $user]);
+        $teamEvents = Auth::user()->teamEvents(); 
+        $pdf = PDF::loadView('pages.ticket', [ 'user' => $user,'events'=> $events,'teamEvents'=> $teamEvents]);
         return $pdf->download('ticket.pdf');
     }
     function uploadTicketImage(UploadTicketRequest $request){

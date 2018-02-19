@@ -53,37 +53,15 @@
                 <a class="btn waves-effect waves-light green modal-trigger {{ ($user->hasConfirmed()|| !$user->canConfirm())?'disabled':'' }}" href="#modal-confirm">Confirm and generate ticket</a>
             </div>
         </li>
-        @if($user->needApproval())        
+          
             <li class="step {{ ($user->hasConfirmed() && !$user->isConfirmed())?'active':'' }}">
-                <div class="step-title waves-effect waves-dark">Attestation Of Participation</div>
+                <div class="step-title waves-effect waves-dark">Registeration Form</div>
                 <div class="step-content">
-                    <p>
-                         <a class="btn waves-effect waves-light green {{ $user->hasConfirmed()?'':'disabled' }}" href="{{ route('pages.ticket.download') }}">Download Ticket</a>
-                    </p>
-                    <p>
-                        @include('partials.errors')                        
-                        {!! Form::open(['url' => route('pages.ticket.upload'), 'files' => true, 'id' => 'form-upload-ticket', 'style' => 'display:inline']) !!}
-                            {!! Form::file('ticket', ['class' => 'hide', 'id' => 'file-ticket']) !!}
-                        {!! Form::close() !!}
-                        <button type="button" class="btn waves-effect waves-light green {{ $user->hasConfirmed()?'':'disabled' }}" id="btn-upload-ticket">Upload Ticket</button>
-                    </p>
-                    @if($user->hasUploadedTicket())                     
-                        @unless($user->isAcknowledged())
-                            <p>Sit back and relax we will be verifying your ticket within a day, <strong>dont forget to check back!</strong></p>
-                        @else
-                            @if($user->isConfirmed())
-                                <p><i class="fa fa-check"></i> Hurray! your ticket has been verified</p>
-                            @else
-                                <p class="red-text">Sorry your request has been rejected!</p>
-                                @if($user->confirmation->message)
-                                    <p class="red-text">{{ $user->confirmation->message }}</p>
-                                @endif
-                            @endif
-                        @endif
-                    @endif
+                <p class="red-text"> Your Registration is not yet over</p>
+                  <p class="red-text">Registration forms will be available for download from 20.2.2018,10.00 AM onwards</p>
                 </div>
             </li>
-        @endif        
+            
         
 <div class="modal" id="modal-confirm">
     <div class="modal-content">

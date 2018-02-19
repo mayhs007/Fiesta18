@@ -203,8 +203,8 @@ class User extends Authenticatable
         }
         return false;
    }
-       function LGId(){
-        return 'LG' . $this->id;
+       function F18Id(){
+        return "F'18" . $this->id;
     }
     function hasActivated(){
         if($this->activated == true){
@@ -246,5 +246,20 @@ class User extends Authenticatable
         $users = self::where('id', 'LIKE', $term)->orWhere('full_name', 'LIKE', $term)->orWhere('email', 'LIKE', $term)->orWhere('gender', 'LIKE', $term)->orWhere('mobile', 'LIKE', $term)->orWhereIn('college_id', $college_ids);  
 
         return $users;
+    }
+    function hasEvent()
+    {
+        $events=Event::all()->where('max_members',1);
+        foreach($events as $event)
+        {
+            if($user->event)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
