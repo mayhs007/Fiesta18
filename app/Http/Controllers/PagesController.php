@@ -11,7 +11,9 @@ use App\TeamMember;
 use App\User;
 use App\Event;
 use App\Confirmation;
-
+use App\Department;
+use App\Section;
+use App\Year;
 use App\Rejection;
 use Auth;
 use Session;

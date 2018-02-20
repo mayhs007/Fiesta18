@@ -21,14 +21,22 @@
     </style>    
 </head>
 <body>
-    <img src="images/header.png" class="img-responsive" alt="Header Image">
-    <p class="header text-uppercase">Entry Ticket</p>
+
+@foreach($events as $event)
+<center><h1>MEPCO SCHLENK ENGG COLLEGE</h1></center>
+<center><h4>Fiesta 18</h4></center>
+    <p class="header text-uppercase">{{$event->title}}</p>
+    <ul class="browser-default">
+            @foreach($event->getRulesList() as $rule)
+                <li>{!! $rule !!}</li>
+            @endforeach  
+        </ul> 
     <table class="table">
         <tbody>
             <tr>
-                <th>Legacy ID</th>
+                <th>Fiesta18 ID</th>
                 <td>
-                    
+                    {{$user->F18Id()}}
                 </td>
             </tr>
             <tr>
@@ -44,125 +52,75 @@
                 <td>{{ $user->gender }}</td>
             </tr>
             <tr>
-                <th>College</th>
+                <th>Dep,Yr,Sec</th>
+                <td>{{ $user->department->name }}{{ $user->year->name }}{{ $user->section->name }}</td>
                
             </tr>
-            <tr>
-                <th>Mobile No</th>
-              
-            </tr>
         </tbody>
     </table>
-    @if($user->events->count())
-        <p class="header text-uppercase">Solo Event Details</p>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <th>Event Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($user->events as $index => $event)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $event->title }}</td>                                        
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>    
-    @endif
-        @if($user->teamEvents()->count())
-        <p class="header text-uppercase">Team Event Details</p>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>S.No</th>
-            
-                    <th>Event Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($user->teamEvents() as $index => $event)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                                         
-                        <td>{{ $event->title }}</td>                                        
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>    
-    @endif
-    @if($user->hasTeams())
-        <p class="text-uppercase header">Team Details</p>
-        @foreach($user->teams as $team)
-            <p>{{ $team->name }} - {{ $team->events->first()->title }}</p>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Gender</th>
-                     
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($team->teamMembers as $index => $teamMember)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $teamMember->user->full_name }}</td>
-                            <td>{{ $teamMember->user->email }}</td>
-                            <td>{{ $teamMember->user->gender }}</td>
-                            
-                        </tr>                 
-                    @endforeach
-                </tbody>
-            </table>
-        @endforeach
-    @endif
-    <p class="text-uppercase header">Accompanying Staffs (To be filled by students)</p>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Gender</th>
-           
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                    
-            </tr> 
-            <tr>
-                <td>2</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                    
-            </tr>                  
-        </tbody>
-    </table>
-    <p class="text-uppercase header">Certificate</p>
-    <p style="text-indent: 0.5in">
-         This is to certify that <strong>{{ ($user->gender == 'male' ? 'Mr. ' : 'Ms. ').$user->full_name  }}</strong> is permitted to attend the events of Legacy17 on Sept 8,9 2017. {{ $user->gender == 'male' ? 'He' : 'She' }} is a bonafide student of this institute
-    </p>
     <div class="row" style="margin-top: 70px">
         <div class="col-xs-7">
-            <p>Place:</p>
             <p>Date:</p>  
         </div>  
         <div class="col-xs-3">
             <p class="text-center">
-                Signature & Seal of Head of department/institute
+                Signature of {{$event->staff_incharge}}
             </p>
         </div>
     </div>
+@endforeach
+@if($user->hasTeams())
+<center><h1>MEPCO SCHLENK ENGG COLLEGE</h1></center>
+<center><h4>Fiesta 18</h4></center>
+
+    @foreach($user->teams as $team)
+    <p class="header text-uppercase">{{ $team->events->first()->title }}</p>
+    @foreach($user->TeamEvents() as $event)
+    <ul class="browser-default">
+            @foreach($event->getRulesList() as $rule)
+                <li>{!! $rule !!}</li>
+            @endforeach  
+        </ul> 
+    
+    @endforeach
+    <p class="text-uppercase header">Team Details</p>
+        <p>{{ $team->name }}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>F18ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($team->teamMembers as $index => $teamMember)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                  
+                        <td>{{ $teamMember->user->full_name }}</td>
+                        <td>{{ $teamMember->user->email }}</td>
+                        <td>{{ $teamMember->user->gender }}</td>
+                        
+                    </tr>                 
+                @endforeach
+            </tbody>
+        </table>
+    @endforeach
+
+    <div class="row" style="margin-top: 70px">
+        <div class="col-xs-7">
+            <p>Date:</p>  
+        </div>  
+        <div class="col-xs-3">
+            <p class="text-center">
+                Signature of {{$team->events->first()->staff_incharge}}
+            </p>
+        </div>
+    </div>
+    @endif
 </body>
 </html>

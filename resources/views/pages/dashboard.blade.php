@@ -57,8 +57,9 @@
             <li class="step {{ ($user->hasConfirmed() && !$user->isConfirmed())?'active':'' }}">
                 <div class="step-title waves-effect waves-dark">Registeration Form</div>
                 <div class="step-content">
-                <p class="red-text"> Your Registration is not yet over</p>
-                  <p class="red-text">Registration forms will be available for download from 20.2.2018,10.00 AM onwards</p>
+                <p>
+                         <a class="btn waves-effect waves-light green {{ $user->hasConfirmed()?'':'disabled' }}" href="{{ route('pages.ticket.download') }}">Download Registration Form</a>
+                    </p>
                 </div>
             </li>
             
