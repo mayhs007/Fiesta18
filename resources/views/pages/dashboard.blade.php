@@ -44,6 +44,8 @@
                                     <i class="fa {{ $user->hasSureEvents()?'fa-check':'fa-times' }}"></i> Atleast one of your team leaders has confirmed your participation in their team
                                 </p>
                             @endif
+							<div class="card-panel red pulse white-text">
+							<h5>ONCE CONFIRMED,YOU CAN'T ADD/MODIFY ANY EVENTS</h5></div>
                         </li>
                     </ul>
                 </p>

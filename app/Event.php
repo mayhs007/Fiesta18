@@ -41,7 +41,7 @@ class Event extends Model
         return implode(",", $organizerEmails);
     }
     function getRulesList(){
-        $rules = explode(',', $this->rules);
+        $rules = explode('!', $this->rules);
         $rules_list = [];
         foreach($rules as $rule){
             array_push($rules_list, trim($rule));

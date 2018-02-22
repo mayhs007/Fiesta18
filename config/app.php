@@ -181,7 +181,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         // service provider for minifying html
         GrahamCampbell\HTMLMin\HTMLMinServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class
     ],
 
     /*

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Legacy17 Ticket</title>
+    <title>Fiesta18 Registration Form</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
         .header{
@@ -17,13 +17,18 @@
             border: 1px solid #000;
             padding: 5px;
     
-        }
+       }
+.page-break {
+    page-break-after: always;
+}
+</style>
     </style>    
 </head>
 <body>
 
 @foreach($events as $event)
-<center><h1>MEPCO SCHLENK ENGG COLLEGE</h1></center>
+<center><h1>MEPCO SCHLENK ENGINEERING COLLEGE, SIVAKASI</h1></center>
+<center><h3>(An Autonomous Institution)</h3></center>
 <center><h4>Fiesta 18</h4></center>
     <p class="header text-uppercase">{{$event->title}}</p>
     <ul class="browser-default">
@@ -52,8 +57,13 @@
                 <td>{{ $user->gender }}</td>
             </tr>
             <tr>
-                <th>Dep,Yr,Sec</th>
-                <td>{{ $user->department->name }}{{ $user->year->name }}{{ $user->section->name }}</td>
+                <th>RollNo</th>
+                <td>{{ $user->roll_no}}</td>
+               
+            </tr>
+			  <tr>
+                <th>SIGNATURE OF THE STUDENT</th>
+                <td></td>
                
             </tr>
         </tbody>
@@ -69,47 +79,58 @@
         </div>
     </div>
 @endforeach
-@if($user->hasTeams())
-<center><h1>MEPCO SCHLENK ENGG COLLEGE</h1></center>
-<center><h4>Fiesta 18</h4></center>
 
-    @foreach($user->teams as $team)
-    <p class="header text-uppercase">{{ $team->events->first()->title }}</p>
-    @foreach($user->TeamEvents() as $event)
-    <ul class="browser-default">
-            @foreach($event->getRulesList() as $rule)
-                <li>{!! $rule !!}</li>
-            @endforeach  
-        </ul> 
-    
-    @endforeach
-    <p class="text-uppercase header">Team Details</p>
-        <p>{{ $team->name }}
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <th>F18ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Gender</th>
+@if($user->hasTeams())
+@foreach($user->TeamEvents() as $event)
+	<center><h1>MEPCO SCHLENK ENGINEERING COLLEGE, SIVAKASI</h1></center>
+	<center><h3>(An Autonomous Institution)</h3></center>
+	<center><h4>Fiesta 18</h4></center>
+		
+			<p class="header text-uppercase">{{ $event->title }}</p>
+			<ul class="browser-default">
+				@foreach($event->getRulesList() as $rule)
+					<li>{!! $rule !!}</li>
+				@endforeach  
+			</ul>
+			@foreach($event->teams->where('user_id',$user->id) as $team)			
+			<p class="text-uppercase header">Team Details
+			TEAM NAME:{{ $team->name }}</p>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>S.No</th>
+						<th>RollNo</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Gender</th>
+						<th>Signature</th>
                     
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($team->teamMembers as $index => $teamMember)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                  
-                        <td>{{ $teamMember->user->full_name }}</td>
-                        <td>{{ $teamMember->user->email }}</td>
-                        <td>{{ $teamMember->user->gender }}</td>
+					</tr>
+				</thead>
+				<tbody>
+						<tr>
+							<td>0</td>
+							<td>{{$user->roll_no}}</td>
+							<td>{{$user->full_name}}</td>
+							<td>{{$user->email}}</td>
+							<td>{{$user->gender}}</td>
+							<td></td>
+						
+						</tr>
+					@foreach($team->teamMembers as $index => $teamMember)
+						<tr>
+							<td>{{ $index + 1 }}</td>
+							<td>{{ $teamMember->user->roll_no }}</td>
+							<td>{{ $teamMember->user->full_name }}</td>
+							<td>{{ $teamMember->user->email }}</td>
+							<td>{{ $teamMember->user->gender }}</td>
+							<td></td>
                         
-                    </tr>                 
-                @endforeach
+						</tr>                 
+					@endforeach
             </tbody>
         </table>
-    @endforeach
+		@endforeach
 
     <div class="row" style="margin-top: 70px">
         <div class="col-xs-7">
@@ -117,10 +138,12 @@
         </div>  
         <div class="col-xs-3">
             <p class="text-center">
-                Signature of {{$team->events->first()->staff_incharge}}
+                Signature of {{$event->staff_incharge}}
             </p>
         </div>
     </div>
+	  <div class="page-break"></div>
+	@endforeach
     @endif
 </body>
 </html>

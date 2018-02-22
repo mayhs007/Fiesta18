@@ -15,7 +15,7 @@
             @foreach($registrations as $registration)
                 <li>
                     <div class="collapsible-header">
-                        <strong>{{ $registration->full_name }}</strong> From <strong>{{ $registration->college->name }}</strong>
+                        <strong>{{ $registration->full_name }}</strong> From <strong>{{ $registration->department->name }}-{{ $registration->year->name }}-{{ $registration->section->name }}</strong>
                         @if(Auth::user()->hasRole('root') || Auth::user()->hasRole('registration'))
                             <a class="right" href="{{ route('admin::registrations.edit', ['user_id' => $registration->id]) }}"><i class="fa fa-pencil"></i> Edit</a>
                         @endif

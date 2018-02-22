@@ -17,7 +17,9 @@ use App\Event;
 use Illuminate\Support\Facades\Input;
 use App\Traits\Utilities;
 use App\Config;
-
+use App\Department;
+use App\Section;
+use App\Year;
 use Excel;
 
 class AdminPagesController extends Controller
@@ -178,15 +180,15 @@ class AdminPagesController extends Controller
     function create_registration(RegistrationRequest $request){
         $inputs = Request::all();
         $user = User::create([
+            'roll_no'=>$inputs['roll_no'],
             'full_name' => $inputs['full_name'],
             'email' => $inputs['email'],
             'password' => bcrypt('test'),
             'gender' => $inputs['gender'],
-            'college_id' => $inputs['college_id'],
-            'mobile' => $inputs['mobile'],
+            'department_id' => $inputs['department_id'],
+            'section_id' => $inputs['section_id'],
+            'year_id' => $inputs['year_id'],
             'type' => 'student',
-            'activated' => true,
-            'activation_code' => 0
         ]);
         Session::flash('success', 'The user was registered');
         return redirect()->route('admin::registrations.create');
@@ -195,7 +197,7 @@ class AdminPagesController extends Controller
         $search = Input::get('search', '');
         $search = $search . '%';
         $user_ids = User::search($search)->pluck('id')->toArray();
-        $registrations = User::whereIn('id', $user_ids)->where('activated', true);
+        $registrations = User::whereIn('id', $user_ids)->where('type','student');
         $registrations_count = $registrations->count();
         $registrations = $registrations->paginate(10);
         return view('pages.admin.registrations')->with('registrations', $registrations)->with('registrations_count', $registrations_count);
@@ -265,21 +267,25 @@ class AdminPagesController extends Controller
             return redirect()->route('admin::root');
         }
         if(Auth::user()->hasRole('root')){
-            $colleges = ['all' => 'All'];
+            $departments = ['all' => 'All'];
+            $years = ['all' => 'All'];
             $events = ['all' => 'All'];        
             $events += Event::pluck('title', 'id')->toArray();                    
         }else{
-            $colleges = [];
+            $departments = [];
+            $years = [];
             $events = [];
             $events = Auth::user()->organizings->pluck('title', 'id')->toArray();        
         }
-        $colleges += College::pluck('name', 'id')->toArray();
-        return view('pages.admin.reports')->with('colleges', $colleges)->with('events', $events);
+        $departments += Department::pluck('name', 'id')->toArray();
+        $years += Year::pluck('name', 'id')->toArray();
+        return view('pages.admin.reports')->with('departments', $departments)->with('years', $years)->with('events', $events);
     }
     function reportRegistrations(Request $request){
         $inputs = Request::all();
         $event_id = $inputs['event_id'];
-        $college_id = $inputs['college_id'];
+        $department_id = $inputs['department_id'];
+        $year_id = $inputs['year_id'];
         $gender = $inputs['gender'];
         // Get the registered users in the given event
         if($event_id == "all"){
@@ -309,7 +315,12 @@ class AdminPagesController extends Controller
         if($gender != "all"){
             $users = $users->where('gender', $gender);
         }
-   
+        if($department_id != "all"){
+            $users = $users->where('department_id', $department_id);
+        }
+        if($year_id != "all"){
+            $users = $users->where('year_id', $year_id);
+        }
         if($inputs['report_type'] == 'View Report'){
             $users_count = $users->count();
             $page = Input::get('page', 1);
@@ -320,23 +331,14 @@ class AdminPagesController extends Controller
         else if($inputs['report_type'] == 'Download Excel'){
             $usersArray = [];
             foreach($users as $user){
-                $userArray['LGID'] = $user->id;                
-                $userArray['FullName'] = $user->full_name;
+                $userArray['F18 ID'] = $user->id;                
+                $userArray['Roll_No'] =$user->roll_no;
+                $userArray['Full_Name'] = $user->full_name;
                 $userArray['Email'] = $user->email;
-                $userArray['College'] = $user->college->name;                
+                $userArray['Department'] = $user->department->name;
+                $userArray['Year'] = $user->year->name;
+                $userArray['Section'] = $user->section->name;                
                 $userArray['Gender'] = $user->gender;                
-                $userArray['Mobile'] = $user->mobile;
-                if(!$user->hasConfirmed()){
-                    $userArray['Status'] = 'Not yet confirmed';
-                }
-                else{
-                    if($user->isAcknowledged()){
-                        $userArray['Status'] = $user->confirmation->status == 'ack'? 'Accepted':'Rejected';  
-                    }
-                    else{
-                        $userArray['Status'] = 'Yet to be acknowledged';                          
-                    }
-                }
                 array_push($usersArray, $userArray);
             }
             Excel::create('report', function($excel) use($usersArray){

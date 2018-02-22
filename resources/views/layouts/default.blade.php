@@ -14,6 +14,12 @@
         {{ HTML::Script("js/materialize-stepper.min.js") }} 
         {{ HTML::Script("js/particles.min.js") }}         
         {{ HTML::Script("js/app.js") }}         
+		<style>
+		
+body{font-family: 'Raleway', sans-serif;
+}
+
+</style> 
         @if(env('APP_ENV', 'local') == 'production')
             <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

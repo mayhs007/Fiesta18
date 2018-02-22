@@ -3,11 +3,11 @@
 @section('content')
 
 <div class="row">
-    <h4><i class="fa fa-rocket"></i> About Legacy</h4>    
+    <h4><i class="fa fa-rocket"></i> About Fiesta</h4>    
     <div class="col s12">
         <div class="divider"></div>
         <p class="flow-text" style="text-align: justify">
-            Legacy’17 an inter college cultural competition is going to be organised by a joint act of Finar arts club, Literary association, Photography club, Readers club, Club Innovative, NSS, Blue Sky, Health Club and Consumer Club of Mepco Schlenk Engineering College, Sivakasi. Legacy’17 following the success of its preceding venture Legacy’15 to accommodate its number of events to 30 spanning for 2 days, the 8th and 9th of September 2017. The event is expecting a participation of about 850 dynamic student artists from about 31 premier institutions in Tamil Nadu. The event is proposed to be conducted at 11 venues inside the campus, with the support of the mammoth audience of more than 2000
+            Fiesta’18 an intra college cultural competition is going to be organised by a joint act of Fine arts club, Literary association, Photography club, Readers club, Club Innovative, NSS, Blue Sky, Health Club and Consumer Club of Mepco Schlenk Engineering College, Sivakasi. Fiesta’18 following the success of its preceding venture Fiesta’17 to accommodate its number of events to 16 spanning for 1 day, the 3rd March 2018. The event is expecting a participation of about 800 dynamic student artists from  various departments of premier institutions in Tamil Nadu. The event is proposed to be conducted at 11 venues inside the campus, with the support of the mammoth audience of more than 1500
         </p>
     </div>
 </div>
@@ -35,7 +35,7 @@
             Mepco Schlenk Engineering College, Sivakasi,<br>
             Mepco Engineering College Post - 626 005,<br>
             Virudhunagar District<br>
-            <i class="fa fa-2x fa-mobile"></i><span> 04562 – 235601, 235660, 9677913395, 9442090272</span>                          
+            <i class="fa fa-2x fa-mobile"></i><span> 04562 – 235601, 235660</span>                          
         </p>
     </div>
 </div>

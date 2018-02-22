@@ -2,16 +2,29 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
+use App\Section;
+use App\Department;
+use App\Year;
+use App\Notifications\ResetPassword;
 
 
 class User extends Authenticatable
 {
+    use Notifiable;
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
+    }
+
+    
     protected $fillable = ['full_name','roll_no', 'email', 'password', 'gender', 'department_id','section_id','year_id'];
     function events(){
         return $this->morphToMany('\App\Event', 'registration');
     }
+
     function confirmation(){
         return $this->hasOne('App\Confirmation');
     }
@@ -86,7 +99,7 @@ class User extends Authenticatable
     }
     function department(){
         // Get the college of the student
-        return $this->belongsTo('App\Deparment');
+        return $this->belongsTo('App\Department');
     }
     function section(){
         // Get the college of the student
@@ -204,7 +217,7 @@ class User extends Authenticatable
         return false;
    }
        function F18Id(){
-        return "F'18" . $this->id;
+        return "F'18_" . $this->id;
     }
     function hasActivated(){
         if($this->activated == true){
@@ -242,8 +255,10 @@ class User extends Authenticatable
         }
     }
     static function search($term){
-        $college_ids = College::where('name', 'LIKE', $term)->pluck('id')->toArray();        
-        $users = self::where('id', 'LIKE', $term)->orWhere('full_name', 'LIKE', $term)->orWhere('email', 'LIKE', $term)->orWhere('gender', 'LIKE', $term)->orWhere('mobile', 'LIKE', $term)->orWhereIn('college_id', $college_ids);  
+        $department_ids = Department::where('name', 'LIKE', $term)->pluck('id')->toArray();
+        $section_ids = Section::where('name', 'LIKE', $term)->pluck('id')->toArray();
+        $year_ids = Year::where('name', 'LIKE', $term)->pluck('id')->toArray();        
+        $users = self::where('id', 'LIKE', $term)->orWhere('full_name', 'LIKE', $term)->orWhere('email', 'LIKE', $term)->orWhere('gender', 'LIKE', $term)->orWhere('roll_no', 'LIKE', $term)->orWhereIn('department_id', $department_ids)->orWhereIn('year_id', $year_ids)->orWhereIn('section_id', $section_ids);  
 
         return $users;
     }

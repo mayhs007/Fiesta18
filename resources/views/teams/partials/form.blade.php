@@ -6,7 +6,7 @@
 </div>
 <div class="row">
     <div class="col s12">
-        {!! Form::label('team_members', 'Roll_Nos of all team members') !!}
+        {!! Form::label('team_members', 'Email_ids of all team members') !!}
         <div class="chips-autocomplete">
         </div>
     </div>

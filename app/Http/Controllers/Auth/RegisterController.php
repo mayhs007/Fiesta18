@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/auth/register';
+    protected $redirectTo = '/auth/login';
 
     /**
      * Create a new controller instance.
@@ -65,6 +65,7 @@ class RegisterController extends Controller
             'year_id' => 'required',
             'section_id' => 'required',
         ], $messages);
+		Session::flash('success', 'Your Registeration is Successful You can Login now');
     }
     /**
      * Create a new user instance after a valid registration.

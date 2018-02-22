@@ -30,6 +30,9 @@
                                 {!! Form::label('remember', 'Remember Me!') !!}
                             </div>
                         </div>
+                        <div class="right">
+                        {{ link_to_route('password.request', 'Forget Password?') }}
+                        </div>
                         <div class="row">
                             <div class="col s12">
                                 {!! Form::submit('login', ['class' => 'btn waves-effect green']) !!}

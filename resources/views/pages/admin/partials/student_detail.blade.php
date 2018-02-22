@@ -4,44 +4,27 @@
         <table>
             <tbody>
                 <tr>
-                    <th>Legacy ID</th>
-                    <td>{{ $user->LGId() }}</td>
-                </tr>
-                <tr>
-                    <th>
-                        Attendence
-                    </th>
-                    <td>
-                        <div class="switch">
-                            <label>
-                                Absent
-                                <input class="attendance" data-id="{{ $user->id }}" {{ $user->present? "checked":'' }} type="checkbox">
-                                <span class="lever"></span>
-                                Present
-                            </label>
-                        </div>
-                    </td>
+                    <th>Fiesta18 ID</th>
+                    <td>{{ $user->F18Id() }}</td>
                 </tr>
                 <tr>
                     <th>Name</th>
                     <td>{{ $user->full_name }}</td>
                 </tr>
                 <tr>
-                    <th>College</th>
-                    <td>{{ $user->college->getQualifiedName() }}</td>
+                    <th>Department</th>
+                    <td>{{ $user->department->name }}</td>
                 </tr>
                 <tr>
-                    <th>Email</th>
-                    <td>{{ $user->email }}</td>
+                    <th>Year</th>
+                    <td>{{ $user->year->name }}</td>
                 </tr>
+
                 <tr>
-                    <th>Gender</th>
-                    <td>{{ $user->gender }}</td>
+                    <th>Section</th>
+                    <td>{{ $user->section->name }}</td>
                 </tr>
-                <tr>
-                    <th>Mobile</th>
-                    <td>{{ $user->mobile }}</td>
-                </tr>
+
                 <tr>
                     <th>Registration Confimation</th>
                     <td>
@@ -66,54 +49,7 @@
                         </td>
                     </tr>
                 @endif
-                <tr>
-                    <th>Payment Status</th>
-                    <td>
-                        @if($user->hasPaid())
-                            <span class="green-text">Paid</span>
-                        @else
-                            <span class="red-text">Not Paid</span>
-                        @endif
-                    </td>
-                </tr>
-                @if($user->hasPaid())
-                    <tr>
-                        <th>Paid By</th>
-                        <td>{{ $user->payment->paidBy->full_name }} [{{ $user->payment->paidBy->email }}]</td>
-                    </tr>
-                @endif
-                @if($user->accomodation)
-                    <tr>
-                        <th>Accomodation Request</th>
-                        <td>
-                            @if($user->accomodation->status == 'ack')
-                                <span class="green-text">Accepted</span>
-                            @elseif($user->accomodation->status == 'nack')
-                                <span class="red-text">Rejected</span>    
-                            @else
-                                Yet to be acknowledged
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Accomodation requested days</th>
-                        <td>
-                            {{ $user->accomodation->days }} {{ str_plural('day',$user->accomodation->days) }}
-                        </td>
-                    </tr>
-                @endif
-                @if($user->accomodation && $user->accomodation->status == 'ack')
-                    <tr>
-                        <th>Accomodation Payment Status</th>
-                        <td>
-                            @if($user->accomodation->paid)
-                                <span class="green-text">Paid</span>
-                            @else
-                                <span class="red-text">Not Paid</span>                                
-                            @endif
-                        </td>
-                    </tr>
-                @endif
+                
             </tbody>
         </table>
     </li>
@@ -124,8 +60,6 @@
             <h5>Events Details</h5>                            
         </li>
         @foreach($user->events as $event)
-            <span class="new badge blue" data-badge-caption="From Same college">{{ $user->college->noOfParticipantsForEvent($event->id) }}</span> 
-            <span class="new badge green" data-badge-caption="Total Confirmed">{{   $event->noOfConfirmedRegistration() }}</span>
             <li class="collection-item">
                 {{ $event->title }}
             </li>
@@ -139,8 +73,6 @@
         </li>
         @foreach($user->teams as $team)
             <li class="collection-item">
-                <span class="new badge blue" data-badge-caption="From Same college">{{ $user->college->noOfParticipantsForEvent($team->events->first()->id) }}</span> 
-                <span class="new badge green" data-badge-caption="Total Confirmed">{{ $team->events->first()->noOfConfirmedRegistration() }}</span>
                 <p>
                     <strong>{{ $team->events->first()->title }}</strong>                         
                 </p>
@@ -151,8 +83,6 @@
         @endforeach
         @foreach($user->teamMembers as $teamMember)
             <li class="collection-item">
-                <span class="new badge blue" data-badge-caption="From Same college">{{ $user->college->noOfParticipantsForEvent($teamMember->team->events->first()->id) }}</span> 
-                <span class="new badge green" data-badge-caption="Total Confirmed">{{ $teamMember->team->events->first()->noOfConfirmedRegistration() }}</span>
                 <p>
                     <strong>{{ $teamMember->team->events->first()->title }}</strong>                         
                 </p>

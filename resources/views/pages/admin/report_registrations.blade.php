@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>
-                            LG ID
+                            Fiesta ID
                         </th>
                         <th>
                             Full Name
@@ -21,45 +21,31 @@
                             Email
                         </th>
                         <th>
-                            College
+                            Department
+                        </th>
+                        <th>
+                            Year
+                        </th>
+                        <th>
+                            Section
                         </th>
                         <th>
                             Gender
-                        </th>
-                        <th>
-                            Mobile
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                        <th>
-                            Payment
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($users as $user)
                         <tr>
-                            <td>{{ $user->LGId() }}</td>
+                            <td>{{ $user->F18Id() }}</td>
                             <td>{{ $user->full_name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->college->name }}</td>
-                            <td>{{ $user->gender }}</td>                            
-                            <td>{{ $user->mobile }}</td>  
-                            <td>
-                                @if($user->hasConfirmed())
-                                    @if($user->confirmation->status != null)
-                                        {{ $user->confirmation->status == 'ack'?'Accepted': 'Rejected' }}
-                                    @else
-                                        Not yet acknowledged
-                                    @endif
-                                @else
-                                    Not yet cofirmed                                    
-                                @endif
-                            </td>    
-                            <td>
-                                {{ $user->hasPaid()?'Paid': 'Not Paid' }}
-                            </td>                       
+                            <td>{{ $user->department->name }}</td>
+                            <td>{{ $user->year->name }}</td>
+                            <td>{{ $user->section->name }}</td>
+                            <td>{{ $user->gender }}</td>                              
+           
+                            
                         </tr>
                     @endforeach
                 </tbody>

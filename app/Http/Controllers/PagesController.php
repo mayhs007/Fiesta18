@@ -114,7 +114,7 @@ class PagesController extends Controller
     }
     function getCollegeMates($user_id){
         $user  = User::find($user_id);
-        $userEmails = User::where('id', '<>', $user->id)->where('type','student')->get(['email']);
+        $userEmails = User::where('id', '<>', $user->id)->where('type','student')->where('gender',$user->gender)->get(['email']);
         return response()->json($userEmails);
     }
     function confirm(){

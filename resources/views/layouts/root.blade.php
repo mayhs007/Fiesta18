@@ -10,7 +10,13 @@
         {{ HTML::Script("js/jquery.min.js") }}        
         {{ HTML::Script("js/materialize.min.js") }} 
         {{ HTML::Script("js/particles.min.js") }}   
-        {{ HTML::Script("js/app.js") }}         
+        {{ HTML::Script("js/app.js") }}
+		<style>
+		@import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
+body{font-family:'Kaushan Script',cursive;
+}
+
+</style> 		
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">            
         <style>
             .slider-fixed-item{

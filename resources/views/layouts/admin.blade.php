@@ -10,7 +10,11 @@
         {{ HTML::Style("css/material-icons.css") }}                                              
         {{ HTML::Script("js/jquery.min.js") }}   
         {{ HTML::Script("js/materialize.min.js") }} 
-        {{ HTML::Script("js/app.js") }}         
+        {{ HTML::Script("js/app.js") }}   
+<style>
+body{font-family: 'Raleway', sans-serif;
+}
+</style>		
     </head>
     <body>
         @include('layouts.partials.admin_nav')
