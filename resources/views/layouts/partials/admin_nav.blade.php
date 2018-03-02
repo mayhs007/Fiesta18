@@ -93,6 +93,13 @@
                     </li>
                    
                 @endif
+                @if(Auth::user()->hasRole('pixie') || Auth::user()->hasRole('root') )
+                <li class="collection-item">
+                        <li>
+                            <a href="{{ route('admin::vote') }}"><i class="fa fa-2x fa-tasks"></i>PIXIE VOTE</a>
+                        </li>   
+                </li>
+                @endif
             </ul>
         </div>
     </nav>

@@ -88,7 +88,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => ['auth','a
 
        Route::get('requests/all', ['as' => 'requests.all', 'uses' => 'AdminPagesController@allRequests']);
        Route::get('requests', ['as' => 'requests', 'uses' => 'AdminPagesController@requests']);
-            
+       Route::post('vote', ['as' => 'vote', 'uses' => 'AdminPagesController@vote']);
+       Route::get('vote', ['as' => 'vote', 'uses' => 'AdminPagesController@vote']);
+       Route::post('vote_result', ['as' => 'vote_result', 'uses' => 'AdminPagesController@vote_result']);
+       Route::get('vote_result', ['as' => 'vote_result', 'uses' => 'AdminPagesController@vote_result']);      
+       Route::post('votes', ['as' => 'votes', 'uses' => 'AdminPagesController@votes']);
+       Route::get('votes', ['as' => 'votes', 'uses' => 'AdminPagesController@votes']);      
+       
        Route::post('requests', 'AdminPagesController@replyRequest');    
 
        Route::resource('users', 'UsersController', ['except' => 'show']);

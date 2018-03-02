@@ -20,6 +20,7 @@ use App\Config;
 use App\Department;
 use App\Section;
 use App\Year;
+use App\Vote;
 use Excel;
 
 class AdminPagesController extends Controller
@@ -418,5 +419,36 @@ class AdminPagesController extends Controller
         exec($inputs['command'], $output);
         return view('pages.admin.terminal')->with('output', implode("<br>", $output));
     }
-    
+    function vote()
+    {
+        return view('pages.admin.votes');
+    }
+    function votes(Request $request)
+    {
+        $inputs = Request::all();
+        $votes = new Vote();
+        $votes->roll_no=$inputs['roll_no'];
+        $votes->photo_id=$inputs['photo_id'];
+        try{
+            if($votes->save())
+        {
+            Session::flash('success', 'The Vote has been done!'); 
+        }
+        else
+        {
+            Session::flash('success', 'The Vote has not been done!'); 
+        }
+    }
+    catch(\Illuminate\Database\QueryException $ex){
+        Session::flash('success','This Roll No Already Exists'); 
+    }
+
+        return view('pages.admin.votes');
+    }
+    function vote_result()
+    {
+        $votes=Vote::all();
+        $votes=$votes->groupBy('photo_id');
+        return view('pages.admin.vote_result')->with('votes',$votes);
+    }
 }
